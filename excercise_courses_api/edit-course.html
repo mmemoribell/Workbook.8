@@ -12,7 +12,7 @@
         <h2>Edit</h2>
             <form>
                 <label for="titleInput">Course</label>
-                <input type="text" name="titleInput" id="titleInput">
+                <input type="text" name="titleInput" id="titleInput" disabled>
                 <label for="completedCheckbox">completed Course</label>
                 <input type="checkbox" name="completedCheckbox" id="completedCheckbox">
 
@@ -49,7 +49,7 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
-                        window.location = "/courses.html"
+                        window.location = "/excercise_courses_api/courses.html"
                     })
                     .catch(error => {
                         console.log(error);
@@ -57,7 +57,7 @@
 
                     });
                 }  
-              function loadCourse(courseId) {
+              function loadCourse(courseName) {
                 fetch('http://localhost:8888/courses/${courseId}').then(response => response.json()).then(course =>{
                      console.log(course);
                     completedCheckbox.checked = course.completed;
