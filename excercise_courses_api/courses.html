@@ -37,7 +37,7 @@
 
            function createEditLink(course) {
             const a = document.createElement("a");
-             a.href = "/excercise_courses_api/edit-course.html" + course.id;
+             a.href = "/excercise_courses_api/edit-course.html?id=" + course.id;
              a.innerText = "edit"
              return a;
            }

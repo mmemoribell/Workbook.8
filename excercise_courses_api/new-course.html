@@ -7,6 +7,61 @@
     <title>adding courses</title>
 </head>
 <body>
-    
+        <main>
+            <h2>Add</h2>
+            <form>
+                <label for="courseInput">Course</label>
+                <input type="text" name="courseInput" id="courseInput">
+                <label for="completedCheckbox">Completed Course</label>
+                <input type="checkbox" name="completedCheckbox" id="completedCheckbox">
+                <div>
+                    <button>Save</button>
+                    <a href="/excercise_courses_api/courses.html">Cancel</a>
+                </div>
+                <p id="messageParagraph"></p>
+            </form>
+        </main>
+
+        <script>
+            (function () {
+                const $q = (selector) => document.querySelector(selector);
+                const completedCheckbox = $q("#completedCheckbox");
+                const courseInput = $q("#courseInput");
+                const form = $q("form");
+                const messageParagraph = $q("#messageParagraph");
+
+                function saveCourse(event) {
+                    event.preventDefault();
+
+
+                    const bodyData = {
+                        Id: 1,
+                        courseName: courseInput.value,
+                        completed: completedCheckbox.checked,
+                    }
+                    fetch("http://localhost:8888/courses", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(bodyData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        window.location ="/excercise_courses_api/courses.html"
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        messageParagraph.innerText =  "An unexpected error occured."
+                    });
+
+
+                }
+                
+                window.onload + function () {
+                    form.onsubmit = saveCourse;
+                }
+              }
+            )()
+        </script>
 </body>
 </html>
