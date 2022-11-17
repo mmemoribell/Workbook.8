@@ -6,7 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit</title>
 </head>
+
 <body>
+    <main>
+        <h2>Edit</h2>
+            <form>
+                <label for="titleInput">Course</label>
+                <input type="text" name="titleInput" id="titleInput">
+                <label for="completedCheckbox">Edit Course</label>
+                <input type="checkbox" name="completedCheckbox" id="completedCheckbox">
+
+                <div>
+                    <button>Save</button>
+                    <a href="/excercise_courses_api/courses.html">cancel</a>
+                </div>
+                <p id="messageParagraph"></p>
+            </form>
+    </main>
+    <script>
+        (function () {
+            const $q = (selector) => document.querySelector(selector);
+            const completedCheckbox = $q("#completedCheckbox");
+            const titleInput = $q("#titleInput");
+            const form = $q("form");
+            const messageParagraph = $q("#messageParagraph");
+
+                function saveCourse(event) {
+                    event.preventDefault();
+                    const id = getCourseName();
+
+                    const bodyData = {
+                        Id: 1,
+                        courseName: titleInput.value,
+                        completed: completedCheckbox.checked,
+
+                    }
+                fetch("http://localhost:8888/courses" + id, {
+                     method: "PUT",
+                     headers: { "Content-Type": "application/json" },
+                     body: JSON.stringify(bodyData)
+                  })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        window.location = "/courses.html"
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        messageParagraph.innerText = "An unexpected error occured."
+
+                    });
+                }  
+              function loadCourse(courseId) {
+                fetch('http://localhost:8888/courses/${courseId}').then(response => response.json()).then(course =>{
+                     console.log(course);
+                    completedCheckbox.checked = course.completed;
+                    titleInput.value = course.courseName;
+                })
+              }
+              function getCourseName() {
+                const params = new URLSearchParams(location.search);
+                return params.get("name");
+              }
+              window.onload = function () {
+                loadCourse(getCourseName());
+                form.onsubmit = saveCourse;
+
+              }
+        })()
     
+    </script>
 </body>
 </html>

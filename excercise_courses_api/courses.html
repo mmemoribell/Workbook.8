@@ -35,9 +35,9 @@
             return fetch("http://localhost:8888/courses").then(response => response.json());
            }
 
-           function editLink(course) {
+           function createEditLink(course) {
             const a = document.createElement("a");
-             a.href = "./edit-course.html" + course.id;
+             a.href = "/excercise_courses_api/edit-course.html" + course.courseName;
              a.innerText = "edit"
              return a;
            }
@@ -57,10 +57,11 @@
             cell4.innerText = course.instructor;
             cell5.innerText = course.startDate;
             cell6.innerText = course.numDays;
-            const a = editLink(course);        
+            const a = createEditLink(course);
+                    cell6.appendChild(a);        
             }
         }
-       
+    
            window.onload = () => {
             loadData().then(data => fillTable(data))
             }    
