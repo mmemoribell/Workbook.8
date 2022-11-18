@@ -12,18 +12,17 @@
         <h2>Edit</h2>
             <form>
                 <label for="courseInput">Course Name</label>
-                <input type="text" name="courseInput" id="courseInput" disabled>
+                <input type="text" name="courseInput" id="courseInput">
                 <label for="department">Course Deparment</label>
-                <input type="text" name="deparmentInput" id="departmentInput" disabled>
+                <input type="text" name="deparmentInput" id="departmentInput">
                 <label for="instructor">Instructor</label>
-                <input type="text" name="instructorInput" id="instructorInput" disabled>
+                <input type="text" name="instructorInput" id="instructorInput">
                 <label for="courseStrtDy">Course Start Date</label>
-                <input type="text" name="courseStrtDyInput" id="courseStrtDyInput" disabled>
+                <input type="text" name="courseStrtDyInput" id="courseStrtDyInput">
                 <label for="courseNumber">Course Number</label>
-                <input type="text" name="courseNumberInput" id="courseNumberInput" disabled>
+                <input type="text" name="courseNumberInput" id="courseNumberInput">
                 <label for="courseLenght">Course Length</label>
-                <input type="text" name="courseLengthInput" id="courseLengthInput" disabled>
-
+                <input type="text" name="courseLengthInput" id="courseLengthInput">
                 <div>
                     <button>Save</button>
                     <a href="/excercise_courses_api/courses.html">cancel</a>
@@ -45,7 +44,7 @@
 
                 function saveCourse(event) {
                     event.preventDefault();
-                    const id = getCourseName();
+                   
 
                     const bodyData = {
                         courseName: courseInput.value,
@@ -64,7 +63,7 @@
                     .then((response) => response.json())
                     .then((data) => {
                         console.log(data);
-                        window.location = "/excercise_courses_api/courses.html"
+                        window.location = "./courses.html"
                     })
                     .catch(error => {
                         console.log(error);
@@ -72,8 +71,8 @@
 
                     });
                 }  
-              function loadCourse(course) {
-                fetch('http://localhost:8888/courses/${courseId}').then((response) => response.json()).then(course =>{
+              function loadCourse(courseId) {
+                fetch(`http://localhost:8888/courses/${courseId}`).then(response => response.json()).then(course =>{
                      console.log(course);
                      courseInput.value = course.courseName;
                      departmentInput.value = course.dept;
@@ -83,12 +82,12 @@
                      courseLengthInput.value = course.numDays;
                 })
               }
-              function getCourseName() {
+              function getCourseId() {
                 const params = new URLSearchParams(location.search);
-                return params.get("");
+                return params.get("id");
               }
               window.onload = function () {
-                loadCourse(getCourseName());
+                loadCourse(getCourseId());
                 form.onsubmit = saveCourse;
 
               }
