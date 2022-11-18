@@ -46,8 +46,8 @@
                      headers: { "Content-Type": "application/json" },
                      body: JSON.stringify(bodyData)
                   })
-                    .then(response => response.json())
-                    .then(data => {
+                    .then((response) => response.json())
+                    .then((data) => {
                         console.log(data);
                         window.location = "/excercise_courses_api/courses.html"
                     })

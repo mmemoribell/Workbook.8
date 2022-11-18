@@ -10,13 +10,23 @@
         <main>
             <h2>Add</h2>
             <form>
-                <label for="courseInput">Course</label>
+                <label for="courseInput">Course Name</label>
                 <input type="text" name="courseInput" id="courseInput">
-                <label for="completedCheckbox">Completed Course</label>
-                <input type="checkbox" name="completedCheckbox" id="completedCheckbox">
+                <label for="department">Course Deparment</label>
+                <input type="text" name="deparmentInput" id="departmentInput">
+                <label for="instructor">Instructor</label>
+                <input type="text" name="instructorInput" id="instructorInput">
+                <label for="courseStrtDy">Course Start Date</label>
+                <input type="text" name="courseStrtDyInput" id="courseStrtDyInput">
+                <label for="courseNumber">Course Number</label>
+                <input type="text" name="courseNumberInput" id="courseNumberInput">
+                <label for="courseLenght">Course Length</label>
+                <input type="text" name="courseLengthInput" id="courseLengthInput">
+                <button>Add Course</button>
                 <div>
-                    <button>Save</button>
+                    <button>
                     <a href="/excercise_courses_api/courses.html">Cancel</a>
+                    </button>
                 </div>
                 <p id="messageParagraph"></p>
             </form>
@@ -25,8 +35,12 @@
         <script>
             (function () {
                 const $q = (selector) => document.querySelector(selector);
-                const completedCheckbox = $q("#completedCheckbox");
                 const courseInput = $q("#courseInput");
+                const department = $q("#departmentInput");
+                const instructor = $q("#instructorInput");
+                const courseStrtDy = $q("#courseStrtDyInput");
+                const courseNumber = $q("#courseNumberInput");
+                const courseLength = $q("#courseLengthInput");
                 const form = $q("form");
                 const messageParagraph = $q("#messageParagraph");
 
@@ -35,19 +49,22 @@
 
 
                     const bodyData = {
-                        Id: 1,
                         courseName: courseInput.value,
-                        completed: completedCheckbox.checked,
+                        dept: departmentInput.value,
+                        courseNum: courseNumberInput.value,
+                        instructor: instructorInput.value,
+                        startDate: courseStrtDyInput.value,
+                        numDays: courseLengthInput.value,
                     }
                     fetch("http://localhost:8888/courses", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(bodyData)
                     })
-                    .then(response => response.json())
-                    .then(data => {
+                    .then((response) => response.json())
+                    .then((data) => {
                         console.log(data);
-                        window.location ="/excercise_courses_api/courses.html"
+                        window.location ="./courses.html"
                     })
                     .catch(error => {
                         console.log(error);
@@ -57,7 +74,7 @@
 
                 }
                 
-                window.onload + function () {
+                window.onload = function () {
                     form.onsubmit = saveCourse;
                 }
               }
